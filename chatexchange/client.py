@@ -305,7 +305,7 @@ class Client(object):
                     "Attempt %d: denied: duplicate, waiting %.1f seconds.",
                     attempt, wait)
                 return wait, " "  # add padding because markdown
-        return 0, ""
+        return 0
 
     def _do_action_despite_throttling(self, action):
         action_type = action[0]
@@ -324,12 +324,16 @@ class Client(object):
         unpacked = None
         while not sent:
             wait = 0
+            padding = ""
             attempt += 1
             self.logger.debug("Attempt %d: start.", attempt)
 
             response = self._try_send(action_type, room_id, message_id, text)
 
-            wait, padding = self._wait_for(response, attempt)
+            wait = self._wait_for(response, attempt)
+            if isinstance(wait, tuple):
+                wait, padding = wait
+
             dbg = "Attempt %d: waiting %.1f seconds", attempt, wait
 
             if padding:
