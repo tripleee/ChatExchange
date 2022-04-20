@@ -305,6 +305,7 @@ class Client(object):
                     "Attempt %d: denied: duplicate, waiting %.1f seconds.",
                     attempt, wait)
                 return wait, " "  # add padding because markdown
+        return 0, ""
 
     def _do_action_despite_throttling(self, action):
         action_type = action[0]
