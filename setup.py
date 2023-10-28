@@ -1,8 +1,11 @@
 import setuptools
 
+from chatexchange.version import __version__
+
+
 setuptools.setup(
     name='ChatExchange',
-    version='0.0.4',
+    version=__version__,
     url='https://github.com/Manishearth/ChatExchange',
     packages=[
         'chatexchange'
