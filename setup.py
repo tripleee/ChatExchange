@@ -24,6 +24,9 @@ setuptools.setup(
             'pytest>=3.4.2',
             'py>=1.5.0',
             'bpython>=0.16'
+        ],
+        'pypi': [
+            'build',
         ]
     }
 )
