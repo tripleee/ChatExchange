@@ -2,7 +2,9 @@ name: Upload to PyPI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, pypi-test ]
+
+  workflow_dispatch:
 
 jobs:
   build:
