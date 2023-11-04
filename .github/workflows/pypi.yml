@@ -22,16 +22,16 @@ jobs:
         python3 -m
         pip install
         build
-        beautifulsoup4>=4.3.2
-        requests>=2.2.1
-        websocket-client>=0.13.0
+        'beautifulsoup4>=4.3.2'
+        'requests>=2.2.1'
+        'websocket-client>=0.13.0'
         --user
     - name: Create and commit version.py
       run: |
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
-          git pull github ${GITHUB_REF} --ff-only
+          git pull github ${GITHUB_REF} --ff-only -t
           echo "__version__ = '$(git describe)'" >chatexchange/version.py
           git commit -m "Committed from Github Actions" chatexchange/version.py
           git push github HEAD:${GITHUB_REF}
