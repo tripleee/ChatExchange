@@ -32,7 +32,7 @@ jobs:
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
           git pull github ${GITHUB_REF} --ff-only -t
-          echo "__version__ = '$(git describe)'" >chatexchange/version.py
+          echo "__version__ = '$(git describe --always)'" >chatexchange/version.py
           git commit -m "Committed from Github Actions" chatexchange/version.py
           git push github HEAD:${GITHUB_REF}
     - name: Build a binary wheel and a source tarball
