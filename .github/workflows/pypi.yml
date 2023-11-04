@@ -21,7 +21,10 @@ jobs:
       run: >-
         python3 -m
         pip install
-        build -r requirements.txt
+        build
+        beautifulsoup4>=4.3.2
+        requests>=2.2.1
+        websocket-client>=0.13.0
         --user
     - name: Create and commit version.py
       run: |
