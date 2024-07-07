@@ -304,7 +304,7 @@ class Client(object):
                     assert action_type == 'delete'
                     response = self._br.delete_message(message_id)
             except requests.HTTPError as ex:
-                if ex.response.status_code == 409:
+                if ex.response.status_code in (409, 429):
                     # this could be a throttling message we know how to handle
                     response = ex.response
                 else:
