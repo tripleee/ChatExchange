@@ -10,6 +10,7 @@ import time
 
 from bs4 import BeautifulSoup
 import requests
+from requests.adapters import HTTPAdapter, Retry
 import websocket
 from . import _utils
 import socket
@@ -17,6 +18,8 @@ import re
 
 
 logger = logging.getLogger(__name__)
+
+MAX_HTTP_RETRIES = 5                # EGAD! A MAGIC NUMBER!
 
 
 class Browser(object):
@@ -38,6 +41,12 @@ class Browser(object):
         self.session.headers.update({
             'User-Agent': self.user_agent
         })
+        self.session.mount(
+            "https://", HTTPAdapter(
+                max_retries=Retry(
+                    total=MAX_HTTP_RETRIES,
+                    backoff_factor=1,
+                    status_forcelist=[429])))
         self.rooms = {}
         self.sockets = {}
         self.polls = {}
@@ -72,7 +81,6 @@ class Browser(object):
         # whereas using .request with method='POST' would create a query string
 
         # Try again if we fail. We're blaming "the internet" for weirdness.
-        MAX_HTTP_RETRIES = 5                # EGAD! A MAGIC NUMBER!
         attempt = 0
         response = None
 
